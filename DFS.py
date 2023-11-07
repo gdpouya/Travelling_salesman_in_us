@@ -10,19 +10,24 @@ class DFS:
         self.is_visited=[]
         self.distance_matrix=distance_matrix
         self.city_index=city_index
+        self.finded=False
         self.start_search()
+        
         
     def is_goal(self, node):
         # print(f"check goal{node.name}")
         return node.name == self.destination_name
     def dfs_go(self,current_node):
+        if self.finded:
+            return
         if current_node.name in self.is_visited:
             self.number_of_nodes -= 1
             return    
         self.is_visited.append(current_node.name)
         if self.is_goal(current_node):
             self.print_result(current_node)
-            sys.exit()
+            self.finded=True
+            return
         for child_name, cost in enumerate(self.distance_matrix[self.city_index.index(current_node.name)]):
                 if cost > 0 and self.city_index[child_name]:
                     child_node = current_node.add_child(self.city_index[child_name], cost)
@@ -32,7 +37,8 @@ class DFS:
         
     def start_search(self):
         self.dfs_go(self.root_node)
-        self.print_result(None)
+        if not self.finded:
+            self.print_result(None)
 
     def generate_path(self, destination):
         return destination.path

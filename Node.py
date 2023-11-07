@@ -8,7 +8,7 @@ class Node:
         self.children = {}
 
     def add_child(self, name, price):
-        child_path = f"{self.path} -> {name}"
+        child_path = f"{self.path} -> {name} "
         child = Node(name, self.price + price, child_path, self.number_of_nodes + 1)
         self.children[name] = child
         return child
